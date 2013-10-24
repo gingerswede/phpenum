@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>doc</title>
+		<meta name="description" content="Documentation of functions for Purple Kiwi Enum" />
+		<meta name="author" content="Emil Carlsson" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />		
+		<style type="text/css">
+			#wrapper {
+				width:800px;
+				margin: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<header>
+				<h1>Purple Kiwi Enumeration</h1>
+			</header>
+			<nav>
+				<ul>
+					<li><a href="#How">How to create an enumeration.</a></li>
+					<li><a href="#GetNames">GetNames()</a></li>
+					<li><a href="#GetName">GetName()</a></li>
+					<li><a href="#GetNumber">GetNumber()</a></li>
+					<li><a href="#GetNameNumberPair">GetNameNumberPair()</a></li>
+					<li><a href="#HasNumber">HasNumber()</a></li>
+					<li><a href="#HasName">HasName()</a></li>
+					<li><a href="#HighestEnumeration">HighestEnumeration()</a></li>
+					<li><a href="#LowestEnumeration">LowestEnumeration()</a></li>
+				</ul>
+			</nav>
+			
+			<div>
+				<h2 id="How">How to create an enumeration.</h2>	
+				<p>
+					PHP lack the ability to create enumerations. This can, if you
+					are used to them, make programming a bit difficult. There are
+					ways to emulate this but that requires the latest PHP release
+					and that that library is installed on your server.
+				</p>
+				<p>
+					This extention makes it possible to almost emulate the behavior
+					of an enumeration. What you do is that you create a php-class
+					containing constants. The constant name is the named part of
+					an enumeration and then you assign the number you want that name
+					to hold and then extend it with the PurpleKiwi Enum class Exampel:
+				</p>
+				<p>
+					<pre>
+&lt;?php
+require_once '/path/to/purplekiwienum.php';
+
+class Enum
+extends \PurpleKiwi\Enum{
+	const January = 1;
+	const February = 2;
+	const March = 3;
+	const April = 4;
+	const May = 5;
+	const June = 6;
+	const July = 7;
+	const August = 8;
+	const September = 9;
+	const October = 10;
+	const November = 11;
+	const December = 12;
+}
+						
+					</pre>
+				</p>
+				<p>
+					Now you have access to all the functions listed in the menue
+					to work with this class in an enumeration fashion. Exampel:
+				</p>
+				<p>
+					<pre>
+$html = "&lt;select name='months'&gt;\n";
+						
+foreach (Enum::GetNameNumberPair() as $name =&gt; $number) {
+	$html .= "\t&lt;option value='$number'&gt;$name&lt;/option&gt;\n";
+}
+
+$html .= "&lt;/select&gt;\n";
+
+return $html;
+					</pre>
+				</p>
+				<p>
+					Previous example would return:
+				</p>
+				<p>
+					<pre>
+&lt;select name='months'&gt;
+	&lt;option value='1'&gt;January&lt;/option&gt;
+	&lt;option value='2'&gt;February&lt;/option&gt;
+	&lt;option value='3'&gt;March&lt;/option&gt;
+	&lt;option value='4'&gt;April&lt;/option&gt;
+	&lt;option value='5'&gt;May&lt;/option&gt;
+	&lt;option value='6'&gt;June&lt;/option&gt;
+	&lt;option value='7'&gt;July&lt;/option&gt;
+	&lt;option value='8'&gt;August&lt;/option&gt;
+	&lt;option value='9'&gt;September&lt;/option&gt;
+	&lt;option value='10'&gt;October&lt;/option&gt;
+	&lt;option value='11'&gt;November&lt;/option&gt;
+	&lt;option value='12'&gt;December&lt;/option&gt;
+&lt;/select&gt;
+					</pre>
+				</p>
+				<p>
+					Which in turn would result in this on a webpage:<br />
+					<select name='months'>
+						<option value='1'>January</option>
+						<option value='2'>February</option>
+						<option value='3'>March</option>
+						<option value='4'>April</option>
+						<option value='5'>May</option>
+						<option value='6'>June</option>
+						<option value='7'>July</option>
+						<option value='8'>August</option>
+						<option value='9'>September</option>
+						<option value='10'>October</option>
+						<option value='11'>November</option>
+						<option value='12'>December</option>
+					</select>
+				</p>
+			</div>
+			
+			<div>
+				<h2 id="GetNames">public static function GetNames()</h2>
+				<p>
+					<h3>Return</h3> 
+					Returns all constants as an array where the value is constant 
+					name and key is the corresponding value.
+				</p>
+			</div>
+			<div>
+				<h2 id="GetName">public static function GetName($number)</h2>
+				<p>
+					<h3>Param</h3>
+					int $number The number part of an enumeration.
+				</p>
+				<p>
+					<h3>Return</h3>
+					Return a specific value associated with that number.
+				</p>
+			</div>
+			<div>
+				<h2 id="GetNumber">public static function GetNumber($name, [$casesensitive = true])</h2>
+				<p>
+					<h3>Param</h3>
+					string $name The named part of the enumeration.
+				</p>
+				<p>
+					<h3>Param</h3>
+					bool $casesensitive This declares if the search should be case sensitive or not.
+					<br />
+					True - Search is case sensitive. (Default)
+					<br />
+					False - Search is not done case sensitive.
+				</p>
+				<p>
+					<h3>Return</h3>
+					Number of that named element.
+				</p>
+			</div>
+			<div>
+				<h2 id="GetNameNumberPair">public static function GetNameNumberPair()</h2>
+				<p>
+					<h3>Return</h3>
+					Array where the keys are the names and the value is the enumeration number.
+				</p>
+			</div>
+	 		<div>
+	 			<h2 id="HasNumber">public static function HasNumber($number)</h2>
+	 			<p>
+					<h3>Param</h3>
+					int $number Number to see if exists.
+				</p>
+	 			<p>
+					<h3>Return</h3>
+					bool
+				</p>
+	 		</div>
+			<div>
+				<h2 id="HasKey">public static function HasName($name)</h2>
+				<p>
+					<h3>Param</h3>
+					string $name Named entity to search for. Case sensitive.			
+				</p>
+				<p>
+					<h3>Return</h3>
+					bool
+				</p>
+			</div>
+			<div>
+				<h2 id="HighestEnumeration">public static function HighestEnumeration()</h2>
+				<p>
+					<h3>Return</h3>
+					Number value of the highest numbered enumeration.
+				</p>
+			</div>
+			<div>
+				<h2 id="LowestEnumeration">public static function LowestEnumeration()</h2>
+				<p>
+					<h3>Return</h3>
+					Lowest number of the enumeration.
+				</p>
+			</div>
+			<footer>
+				<p>
+					&copy; Copyright  by Emil Carlsson
+				</p>
+			</footer>
+		</div>
+	</body>
+</html>

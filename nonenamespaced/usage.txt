@@ -1,0 +1,39 @@
+This file have the intention of describing the usage of the none namespaced 
+version of the enumeration extention.
+
+First off you need to link in the purplekiwienum.php file. It is recommended
+that this is done with the 'require_once' syntax. After this is done you can
+extend your class that you want to transform into an enumeration with the
+PurpleKiwiEnum class. This will add a few functions. For further information
+about these functions, please consult the documentation file that should be
+avaiable together with the purplekiwienum.php file.
+
+Example:
+
+<?php
+require_once '/path/to/purplekiwienum.php';
+
+class Enum
+extends PurpleKiwiEnum{
+	const January = 1;
+	const February = 2;
+	const March = 3;
+	const April = 4;
+	const May = 5;
+	const June = 6;
+	const July = 7;
+	const August = 8;
+	const September = 9;
+	const October = 10;
+	const November = 11;
+	const December = 12;
+}
+
+After this is done, the class used as an enumeration can now be used similar
+to an enumeration in other languages. Example:
+
+Enum::GetKeys();
+
+In this example an array sorted on the number value of the constants will be 
+returned. Where the key in the array contain the number of the constants and
+the values are a representative of the constant names.
